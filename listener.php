@@ -2,9 +2,9 @@
 
 /**
  * Class : Listener
- * This is the base class for any Listeners to be used for when 
+ * This is the base class for any Listeners to be used for when
  * listening to a event
- * 
+ *
  *
  * @author Sarath S Pillai <sarath@exotel.in>
  *
@@ -23,10 +23,15 @@ class Listener
      * @param string $function The function name
      * @param int    $type     The type of the Listener as given by ListenersTypes class
      */
-      public function __construct($file,$class,$function,$type)
+    public function __construct($file,$class,$function,$type)
     {
-      if (empty($file) || empty($function) || !isset($type) ) {
-        throw new Exception("file ,function or type is empty", 1);
+      if ( empty($function) || !isset($type) ) {
+        throw new Exception("function or type is empty", 1);
+      }
+
+      if (empty($file) && $type == ListenersTypes::Callable) {
+        throw new Exception("file name is empty for a callable type", 1);
+
       }
       $this->file = $file;
       $this->class = $class;
@@ -35,10 +40,10 @@ class Listener
     }
 
     /**
-     * set description
-     * @param string $key  To set a key
-     * @param mixed  $vale value
-     */
+    * set description
+    * @param string $key  To set a key
+    * @param mixed  $vale value
+    */
     public function set($key,$value)
     {
        if (property_exists($self, $key)) {
@@ -48,7 +53,7 @@ class Listener
        return $this;
     }
 
-    /**
+     /**
      * set description
      * @param string $key   The property of the class
      * @param mixed  $value Value to be assigned to the property
@@ -65,7 +70,7 @@ class Listener
 
 /**
  * class ListenersTypes
- * 
+ *
  *Types of listeners
  */
 abstract class ListenersTypes

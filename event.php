@@ -7,6 +7,7 @@
  * @author Sarath S Pillai <sarath@exotel.in>
  *
  */
+
 class Event
 {
     /**
@@ -20,7 +21,8 @@ class Event
     public $source = "";
     public $details = array();
 
-    protected $mandatory_fields = array();
+    protected static $mandatory_fields = array();
+    protected static $__CLASS__ = __CLASS__;
     public function __construct($event_name,array $details)
     {
         $this->name = $event_name;
@@ -33,10 +35,10 @@ class Event
      * @param string $key  To set a key
      * @param mixed  $vale value
      */
-    public function set($key,$value)
+    public function set($key, $value)
     {
-       if (property_exists($self, $key)) {
-           $this->{$key} = $name;
+       if (property_exists(self::$__CLASS__, $key)) {
+           $this->{$key} = $value;
        }
 
        return $this;
@@ -47,9 +49,9 @@ class Event
      * @param string $key   The property of the class
      * @param mixed  $value Value to be assigned to the property
      */
-    public function get(string $key,$name)
+    public function get(string $key)
     {
-        if (property_exists($self, $key)) {
+        if (property_exists(self::$__CLASS__, $key)) {
            return $this->{$key};
        } else {
            return null;
@@ -58,19 +60,19 @@ class Event
 
     /**
      * validateDetails description
-     * @param  array $details   
-     * @return boolean  if  the array have all the required fields
+     * @param  array   $details
+     * @return boolean if  the array have all the required fields
      */
-    protected static final function validateDetails(array $details)
+    final protected static function validateDetails(array $details)
     {
         //If $details is
         //empty,non associative array,not a array return false
         if (empty($details) ||
-            array_keys($arr) == range(0, count($arr) - 1) ||
+            array_keys($details) == range(0, count($details) - 1) ||
             !is_array($details)
             ) {
             throw new Exception("$details given cant be validated as source details", 1);
-            
+
         }
         $details_fields = array_keys($details);
         $missing_fields = array_diff(self::$mandatory_fields, $details_fields);
@@ -78,7 +80,7 @@ class Event
             return true;
         } else {
             throw new Exception('Mandatory fields missing ::' .implode(', ',$missing_fields) , 1);
-            
+
         }
     }
 }
