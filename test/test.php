@@ -3,7 +3,7 @@
  * Class : EventHandler , Event, Listener and EventNames
  */
 
-require_once EVENT_HANDLER_PATH.'/event_processor.php';
+require_once EVENT_PROCESSOR_PATH.'/event_processor.php';
 
 class eventsTest
 {

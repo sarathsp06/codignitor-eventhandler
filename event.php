@@ -8,10 +8,10 @@
  *
  */
 
-class Event
+class event
 {
     /**
-     * This property should be treatened as "readonly". If you change this value
+     * This properties should be treatened as "readonly". If you change this value
      * something scary will happen to you .
      *
      * @readonly
@@ -23,11 +23,12 @@ class Event
 
     protected static $mandatory_fields = array();
     protected static $__CLASS__ = __CLASS__;
-    public function __construct($event_name,array $details)
+    public function __construct($event_name, array $details)
     {
         $this->name = $event_name;
         $this->timestamp = time();
-        $this->details =  $details;
+        //sorting the details in the order in which the $mandatory_fields is defined
+        $this->details =  $this->array_compared_sort($details, self::$mandatory_fields);
     }
 
     /**
@@ -66,7 +67,7 @@ class Event
     final protected static function validateDetails(array $details)
     {
         //If $details is
-        //empty,non associative array,not a array return false
+        //empty,non associative array or not a array throw exception
         if (empty($details) ||
             array_keys($details) == range(0, count($details) - 1) ||
             !is_array($details)
@@ -79,8 +80,40 @@ class Event
         if ($missing_fields == array()) {
             return true;
         } else {
-            throw new Exception('Mandatory fields missing ::' .implode(', ',$missing_fields) , 1);
-
+            throw new Exception('Mandatory fields missing ::' .implode(', ', $missing_fields), 1);
         }
+    }
+
+    /**
+     * array_compared_sort
+     * function sorts associative array arr1 with respect to arr2 values
+     * This is what it does
+     *      arr1 = ['number','user_id', 'tenant_id']
+     *      arr2 = {"blah":"blah", "user_id":"13","tenant_id":"123", "number":"8907965331"}
+     *
+     * The result will be
+     *     {"number":"8907965331","user_id":"13","tenant_id":"123","blah":"blah"}
+     * The relative index of the keys which are not in the arr1 will also be maintained
+     *
+     * @param  array &$arr1 The acssociative array to be sorted passed by reference
+     * @param  array $arr2  The array for lookcup
+     * @return array The sorted array
+     */
+    private function array_compared_sort(array &$arr1, array $arr2)
+    {
+        $len_arr2 = count($arr2);
+        $dict_arr2 = array_flip($arr2);
+        $dict_arr1 = array_flip(array_keys($arr1));
+        uksort($arr1, function ($a, $b) use ($dict_arr2, $dict_arr1, $len_arr2) 
+        {
+            if ($a == $b) {
+                return 0;
+            }
+            $a_val = isset($dict_arr2[$a]) ? $dict_arr2[$a] : $len_arr2 + $dict_arr1[$a];
+            $b_val = isset($dict_arr2[$b]) ? $dict_arr2[$b] : $len_arr2 + $dict_arr1[$b];
+
+            return $a_val < $b_val ? -1 : 1;
+        });
+        return $arr1;
     }
 }
