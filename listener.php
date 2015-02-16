@@ -22,7 +22,7 @@ class Listener
      */
     public function __construct($file, $class, $function, $type)
     {
-      if ( empty($function) || !isset($type) ) {
+      if (empty($function) || !isset($type)) {
         throw new Exception("function or type is empty", 1);
       }
 
@@ -108,37 +108,40 @@ class Listener
 
    /**
     * pingWebHook description
-    * @param  string $url ping the url
+    * This makes an asynchronous call to the url specified with the $data as data parameters anf
+    * do not wait for the status reply to come 
+    * @param  string $url  ping the url
     * @param  array  $data The data to be sent as post reqest to the url
-    * @return array  an array of listener function names and
+    * @return boolean      
     */
-    private static function pingWebHook($url = 'null', array $data)
+    private static function pingWebHook($url = null, array $data)
     {
-        if ($url == 'null') {
+        if (empty($url)) {
           return false;
         }
-      $post_params = array();
-      $errno = 0;
-      $errstr = ";";
-      foreach ($data as $key => &$val) {
-        $post_params[] = $key.'='.urlencode($val);
-      }
-      $post_string = implode('&', $post_params);
-      $parts=parse_url($url);
-      $fp = fsockopen($parts['host'], 80, $errno, $errstr, 30);
-      if (!$fp) {
-          return "Unable to opensocket";
-      }
-      $out = "POST ".$parts['path']." HTTP/1.1\r\n";
-      $out.= "Host: ".$parts['host']."\r\n";
-      $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
-      $out.= "Content-Length: ".strlen($post_string)."\r\n";
-      $out.= "Connection: Close\r\n\r\n";
-      $out.= $post_string;
-      fwrite($fp, $out);
-      fclose($fp);
-
-      return ($errno == 0) ? true : false;
+        $post_params = array();
+        $errno = 0;
+        $errstr = ";";
+        foreach ($data as $key => &$val) {
+            $post_params[] = $key.'='.urlencode($val);
+        }
+        $post_string = implode('&', $post_params);
+        $parts=parse_url($url);
+        $fp = fsockopen($parts['host'], 80, $errno, $errstr, 30);
+        if (!$fp) {
+            return "false";
+        }
+        $out = "POST ".$parts['path']." HTTP/1.1\r\n";
+        $out.= "Host: ".$parts['host']."\r\n";
+        $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
+        $out.= "Content-Length: ".strlen($post_string)."\r\n";
+        $out.= "Connection: Close\r\n\r\n";
+        $out.= $post_string;
+        if (false === fwrite($fp, $out)){
+            return false;
+        }
+        fclose($fp);
+        return true ;
     }
 }
 
@@ -149,6 +152,14 @@ class Listener
  */
 abstract class ListenersTypes
 {
+    /**
+     * The Listener type used for regisrtering webhooks
+     * @var int WebHook
+     */
     const WebHook = 0;
+    /**
+     * The listener type used for registering functions
+     * @var  int Callable
+     */
     const Callable = 1;
 }

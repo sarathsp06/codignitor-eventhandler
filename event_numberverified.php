@@ -10,7 +10,7 @@ class EventNumberVerified extends Event
     private $number = "";
     private $user_id = "";
     private $tenant_id = "";
-    private static $event_name = EventNames::NUMBER_VARIFIED;
+    private static $event_name = EventNames::NUMBER_VERIFIED;
 
     public function __construct(array $details)
     {

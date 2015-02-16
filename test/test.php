@@ -19,5 +19,5 @@ function thenga2()
 }
 
 //===================JUST CHECKING IF VERY BASIC THING IS WORKING =======================
-//echo json_encode(EventHandler::instance()->trigger(new Event(EventNames::NUMBER_VARIFIED,array('number'=>'8907965331'))));
+//echo json_encode(EventHandler::instance()->trigger(new Event(EventNames::NUMBER_VERIFIED,array('number'=>'8907965331'))));
 //echo CODEBASEPATH."/OpenVBX/controllers/exoapi.php\n";

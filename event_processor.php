@@ -33,7 +33,7 @@ class EventProcessor
 {
     /**
    * $_listeners associative array of listeners
-   * it contins the callback tuples
+   * it contains the callback tuples
    *           file_path, type , class , function would be array
    *           file_path, type , webhook , method would be
    *
@@ -97,7 +97,7 @@ class EventProcessor
      * Trigger the event
      * Call all the functions that are registered
      * Ping all  the webhooks that are registered
-     * return array of funciojn to status
+     * return array of funcion to status
      *          array(
      *          $listener->function => return value,..
      *          )

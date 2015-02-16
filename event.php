@@ -3,15 +3,15 @@
  * Class : Event
  * Event Base Class
  * All the events inherit from this class
- *
  * @author Sarath S Pillai <sarath@exotel.in>
  *
  */
 
-class event
+
+class Event
 {
     /**
-     * This properties should be treatened as "readonly". If you change this value
+     * This properties should be treated as "readonly". If you change this value
      * something scary will happen to you .
      *
      * @readonly
@@ -33,8 +33,8 @@ class event
 
     /**
      * set description
-     * @param string $key  To set a key
-     * @param mixed  $vale value
+     * @param string $key    The property name  of the class to be set
+     * @param mixed  $value  value for the property
      */
     public function set($key, $value)
     {
@@ -72,8 +72,7 @@ class event
             array_keys($details) == range(0, count($details) - 1) ||
             !is_array($details)
             ) {
-            throw new Exception("$details given cant be validated as source details", 1);
-
+            throw new Exception(var_export($details) . "given cant be validated as source details", 1);
         }
         $details_fields = array_keys($details);
         $missing_fields = array_diff(self::$mandatory_fields, $details_fields);
@@ -95,8 +94,8 @@ class event
      *     {"number":"8907965331","user_id":"13","tenant_id":"123","blah":"blah"}
      * The relative index of the keys which are not in the arr1 will also be maintained
      *
-     * @param  array &$arr1 The acssociative array to be sorted passed by reference
-     * @param  array $arr2  The array for lookcup
+     * @param  array &$arr1 The associative array to be sorted passed by reference
+     * @param  array $arr2  The array for lookup
      * @return array The sorted array
      */
     private function array_compared_sort(array &$arr1, array $arr2)
@@ -104,8 +103,7 @@ class event
         $len_arr2 = count($arr2);
         $dict_arr2 = array_flip($arr2);
         $dict_arr1 = array_flip(array_keys($arr1));
-        uksort($arr1, function ($a, $b) use ($dict_arr2, $dict_arr1, $len_arr2) 
-        {
+        uksort($arr1, function ($a, $b) use ($dict_arr2, $dict_arr1, $len_arr2) {
             if ($a == $b) {
                 return 0;
             }

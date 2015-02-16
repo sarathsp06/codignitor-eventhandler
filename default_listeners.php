@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * This is the container listing all the default event listeners
  * How to add a event listener
@@ -29,28 +29,28 @@ require_once 'listener.php';
 
 $default_listeners = array (
     array(
-        "event"=> EventNames::NUMBER_VARIFIED,
+        "event"=> EventNames::NUMBER_VERIFIED,
         "listener" => new Listener(
             EVENT_PROCESSOR_PATH."/test/test.php",
             'eventsTest',
             'thenga1',
             ListenersTypes::Callable)),
     array(
-        "event"=> EventNames::NUMBER_VARIFIED,
+        "event"=> EventNames::NUMBER_VERIFIED,
         "listener" => new Listener(
             EVENT_PROCESSOR_PATH."/test/test.php",
             null,
             'thenga2',
             ListenersTypes::Callable)),
     array(
-        "event"=> EventNames::NUMBER_VARIFIED,
+        "event"=> EventNames::NUMBER_VERIFIED,
         "listener" => new Listener(
             EVENT_PROCESSOR_PATH."/test/test.php",
             null,
             'http://obelix.exotel.in/exoapi/getqbransactions/1',
             ListenersTypes::WebHook)),
     array(
-        "event"=> EventNames::NUMBER_VARIFIED,
+        "event"=> EventNames::NUMBER_VERIFIED,
         "listener" => new Listener(
             CODEBASEPATH."/OpenVBX/controllers/exoapi.php",
             'ExoApi',
