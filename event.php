@@ -3,8 +3,8 @@
  * Class : Event
  * Event Base Class
  * All the events inherit from this class
- * @author Sarath S Pillai <sarath@exotel.in>
  *
+ * @author Sarath S Pillai <sarath@exotel.in>
  */
 
 
@@ -16,19 +16,19 @@ class Event
      *
      * @readonly
      */
-    public $name = "";
-    public $timestamp = "";
-    public $source = "";
-    public $details = array();
+    public $event_name = "";
+    public $event_timestamp = "";
+    public $event_source = "";
+    public $event_details = array();
 
     protected static $mandatory_fields = array();
     protected static $__CLASS__ = __CLASS__;
     public function __construct($event_name, array $details)
     {
-        $this->name = $event_name;
-        $this->timestamp = time();
+        $this->event_name = $event_name;
+        $this->event_timestamp = time();
         //sorting the details in the order in which the $mandatory_fields is defined
-        $this->details =  $this->array_compared_sort($details, self::$mandatory_fields);
+        $this->event_details =  $this->array_compared_sort($details, self::$mandatory_fields);
     }
 
     /**

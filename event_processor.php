@@ -114,17 +114,18 @@ class EventProcessor
     public static function trigger(Event $event)
     {
         $calls = array();
-        if (self::has_listeners($event->name, $listeners)) {
+        if (self::has_listeners($event->event_name, $listeners)) {
             foreach ($listeners as $listener) {
                 try {
-                  $calls[$listener->function] = $listener->act($event->details);
+                  $calls[$listener->function] = $listener->act($event->event_details);
                 } catch (Exception $e) {
                   $calls[$listener->function] = false;
                 }
             }
+        } else {
+          //TODO:remove sarath
+          echo "no listeners found " . json_encode($event);
         }
-        echo json_encode($calls);
-
         return $calls;
     }
 
