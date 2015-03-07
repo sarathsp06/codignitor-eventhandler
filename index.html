@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Codignitor-eventhandler by sarathsp06</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Codignitor-eventhandler</h1>
+        <h2>An Event handler for codignitor with webhook support</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/sarathsp06/codignitor-eventhandler/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/sarathsp06/codignitor-eventhandler/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/sarathsp06/codignitor-eventhandler" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="codegnitor-eventhandler" class="anchor" href="#codegnitor-eventhandler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Codegnitor EventHandler</h3>
+
+<p>Here its an event handler library to make the codeignitor [MVC] framework to work with event based systems also.The system can be used with any php project but s tested agains codeigntor only 
+How to use </p>
+
+<pre><code>git clone https://github.com/sarathsp06/codignitor-eventhandler.git
+</code></pre>
+
+<h3>
+<a id="triggering-events" class="anchor" href="#triggering-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Triggering Events</h3>
+
+<p>You can either trigger custom triggers or predefined triggers</p>
+
+<pre><code>EventHandler::instance()-&gt;trigger(new Event(EventNames::NUMBER_VERIFIED,array('number'=&gt;'8907965331')))
+</code></pre>
+
+<p>Here new trigger named EventNames::NUMBER_VERIFIED is triggered it could be any string
+Passed the array as the arguments required for the listeners here 'number'
+Listeners can be added in the default_listeners file as </p>
+
+<h3>
+<a id="adding-listeners" class="anchor" href="#adding-listeners" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Listeners</h3>
+
+<pre><code>#array("event":"The name of the event","listener":"Listener instance")
+$default_lsteners[] = array(
+    "event"=&gt; EventNames::NUMBER_VERIFIED,
+    "listener" =&gt; new Listener(
+    CODEBASEPATH."/some_helper_fle.php",   //file path in which the function deines or null if webhook
+    null,                                  //class name if member function else null
+    'verifyAccount',                       //function name or url
+    ListenersTypes::Callable));            //type supported types are ListenersTypes::Callable and WebHook
+</code></pre>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>In 2015, Sarath S Pllai (<a href="https://github.com/sarathsp06" class="user-mention">@sarathsp06</a>) started and currently is not been maintained but any bug reports wpuld be addressed </p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble using the library contact me at <a href="mailto:sarath.sp06@gmail.com">sarath.sp06@gmail.com</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
